@@ -23,114 +23,74 @@ $query_albuns = mysqli_query($conexao, $sql_albuns);
 </head>
 
 <body>
-    <nav class="navbar is-link" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
-            </a>
-        </div>
-        <div id="navbar" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="../index.php">
-                    Home
-                </a>
+<?php include 'header.php' ?>
 
-                <a class="navbar-item" href="agenda.php">
-                    Agenda
-                </a>
-
-                <a class="navbar-item" href="discografia.php">
-                    Discografia
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Mais
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item" href="cadastro_de_album.php">
-                            Cadastro de Álbum
-                        </a>
-                        <a class="navbar-item" href="cadastro_de_musica.php">
-                            Cadastro de Música
-                        </a>
-                        <a class="navbar-item" href="agendamento_de_show.php">
-                            Agendamento de Show
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item" href="galeria.php">
-                            Galeria
-                        </a>
+<section class="hero is-success is-fullheight">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="title has-text-black">Cadastro de Música</h3>
+                <?php
+                $mensagem_de_erro = isset($_SESSION['mensagem-de-erro']) ? $mensagem_de_erro = $_SESSION['mensagem-de-erro'] : $mensagem_de_erro = '';
+                if (!empty($mensagem_de_erro)) {
+                    ?>
+                    <div class="notification is-warning">
+                        <p><?php echo $mensagem_de_erro ?></p>
                     </div>
-                </div>
-            </div>
-    </nav>
-    <section class="hero is-success is-fullheight">
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <div class="column is-4 is-offset-4">
-                    <h3 class="title has-text-black">Cadastro de Música</h3>
                     <?php
-                    $mensagem_de_erro = isset($_SESSION['mensagem-de-erro']) ? $mensagem_de_erro = $_SESSION['mensagem-de-erro'] : $mensagem_de_erro = '';
-                    if (!empty($mensagem_de_erro)) {
-                        ?>
-                        <div class="notification is-warning">
-                            <p><?php echo $mensagem_de_erro ?></p>
-                        </div>
-                        <?php
-                        unset($_SESSION['mensagem-de-erro']);
-                    }
+                    unset($_SESSION['mensagem-de-erro']);
+                }
+                ?>
+                <?php
+                $mensagem_de_sucesso = isset($_SESSION['mensagem-de-sucesso']) ? $mensagem_de_sucesso = $_SESSION['mensagem-de-sucesso'] : $mensagem_de_sucesso = '';
+                if (!empty($mensagem_de_sucesso)) {
                     ?>
+                    <div class="notification is-success">
+                        <p><?php echo $mensagem_de_sucesso ?></p>
+                    </div>
                     <?php
-                    $mensagem_de_sucesso = isset($_SESSION['mensagem-de-sucesso']) ? $mensagem_de_sucesso = $_SESSION['mensagem-de-sucesso'] : $mensagem_de_sucesso = '';
-                    if (!empty($mensagem_de_sucesso)) {
-                        ?>
-                        <div class="notification is-success">
-                            <p><?php echo $mensagem_de_sucesso ?></p>
+                    unset($_SESSION['mensagem-de-sucesso']);
+                }
+                ?>
+                <div class="box">
+                    <form action="../services/cadastrar_musica.php" method="POST" enctype="multipart/form-data">
+                        <div class="field">
+                            <label class="label">Cantor</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select name="id_cantor" id="id_cantor">
+                                        <?php while ($cantor = mysqli_fetch_array($query)) { ?>
+                                            <option value="<?php echo $cantor['id'] ?>"><?php echo $cantor['nome'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <?php
-                        unset($_SESSION['mensagem-de-sucesso']);
-                    }
-                    ?>
-                    <div class="box">
-                        <form action="../services/cadastrar_musica.php" method="POST" enctype="multipart/form-data">
-                            <div class="field">
-                                <label class="label">Cantor</label>
-                                <div class="control">
-                                    <div class="select">
-                                        <select name="id_cantor" id="id_cantor">
-                                            <?php while ($cantor = mysqli_fetch_array($query)) { ?>
-                                                <option value="<?php echo $cantor['id'] ?>"><?php echo $cantor['nome'] ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
+                        <div class="field">
+                            <label class="label">Álbum</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select name="id_album" id="id_album">
+                                        <?php while ($album = mysqli_fetch_array($query_albuns)) { ?>
+                                            <option value="<?php echo $album['id'] ?>"><?php echo $album['nome'] ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="label">Álbum</label>
-                                <div class="control">
-                                    <div class="select">
-                                        <select name="id_album" id="id_album">
-                                            <?php while ($album = mysqli_fetch_array($query_albuns)) { ?>
-                                                <option value="<?php echo $album['id'] ?>"><?php echo $album['nome'] ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Nome</label>
+                            <div class="control">
+                                <input name="nome_da_musica" type="text" class="input is-normal"
+                                       placeholder="Informe o nome da música">
                             </div>
-                            <div class="field">
-                                <label class="label">Nome</label>
-                                <div class="control">
-                                    <input name="nome_da_musica" type="text" class="input is-normal"
-                                           placeholder="Informe o nome da música">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label class="label">Arquivo</label>
-                                <div class="file has-name is-centered">
-                                    <label class="file-label">
-                                        <input class="file-input" type="file" name="file" id="file" accept=".mp3">
-                                        <span class="file-cta">
+                        </div>
+                        <div class="field">
+                            <label class="label">Arquivo</label>
+                            <div class="file has-name is-centered">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" name="file" id="file" accept=".mp3">
+                                    <span class="file-cta">
                                       <span class="file-icon">
                                         <i class="fas fa-upload"></i>
                                       </span>
@@ -138,15 +98,15 @@ $query_albuns = mysqli_query($conexao, $sql_albuns);
                                         Escolha um arquivo…
                                       </span>
                                     </span>
-                                    </label>
-                                </div>
+                                </label>
                             </div>
-                            <button type="submit" class="button is-block is-link is-normal is-fullwidth">Cadastrar</button>
-                        </form>
-                    </div>
+                        </div>
+                        <button type="submit" class="button is-block is-link is-normal is-fullwidth">Cadastrar</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 </body>
 

@@ -12,62 +12,22 @@
 </head>
 
 <body>
-    <nav class="navbar is-link" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
-            </a>
-        </div>
-        <div id="navbar" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="../index.php">
-                    Home
-                </a>
+<?php include 'header.php' ?>
 
-                <a class="navbar-item" href="agenda.php">
-                    Agenda
-                </a>
+<div class="hero-body">
+    <div class="box">
+        <h3 class="title has-text-grey-dark has-text-centered">Galeria</h3>
 
-                <a class="navbar-item" href="discografia.php">
-                    Discografia
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Mais
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item" href="cadastro_de_album.php">
-                            Cadastro de Álbum
-                        </a>
-                        <a class="navbar-item" href="cadastro_de_musica.php">
-                            Cadastro de Música
-                        </a>
-                        <a class="navbar-item" href="agendamento_de_show.php">
-                            Agendamento de Show
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item" href="galeria.php">
-                            Galeria
-                        </a>
-                    </div>
-                </div>
-            </div>
-    </nav>
-    <div class="hero-body">
-        <div class="box">
-            <h3 class="title has-text-grey-dark has-text-centered">Galeria</h3>
-
-            <?php
-            $quantidade_imagens = 5;
-            for ($i = 1; $i < $quantidade_imagens; $i++) { ?>
-                <div class="modal-card is-centered">
-                    <figure class="image is-5by3">
-                        <img src="../assets/img/imagem<?php echo $i ?>.jpg" alt="Imagem da galeria">
-                    </figure>
-                </div><br>
-            <?php } ?>
-        </div>
+        <?php
+        $quantidade_imagens = 5;
+        for ($i = 1; $i < $quantidade_imagens; $i++) { ?>
+            <div class="modal-card is-centered">
+                <figure class="image is-5by3">
+                    <img src="../assets/img/imagem<?php echo $i ?>.jpg" alt="Imagem da galeria">
+                </figure>
+            </div><br>
+        <?php } ?>
     </div>
+</div>
 </body>
 

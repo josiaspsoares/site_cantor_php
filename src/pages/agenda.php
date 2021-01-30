@@ -20,66 +20,24 @@ $query = mysqli_query($conexao, $sql);
 </head>
 
 <body>
-    <nav class="navbar is-link" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
-            </a>
-        </div>
-        <div id="navbar" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="../index.php">
-                    Home
-                </a>
+<?php include 'header.php' ?>
 
-                <a class="navbar-item" href="agenda.php">
-                    Agenda
-                </a>
+<div class="hero-body">
+    <div class="box">
+        <h3 class="title has-text-grey-dark has-text-centered">Agenda de Shows</h3>
 
-                <a class="navbar-item" href="discografia.php">
-                    Discografia
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Mais
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item" href="cadastro_de_album.php">
-                            Cadastro de Álbum
-                        </a>
-                        <a class="navbar-item" href="cadastro_de_musica.php">
-                            Cadastro de Música
-                        </a>
-                        <a class="navbar-item" href="agendamento_de_show.php">
-                            Agendamento de Show
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item" href="galeria.php">
-                            Galeria
-                        </a>
+        <?php while ($show = mysqli_fetch_array($query)) { ?>
+            <div class="container">
+                <div class="notification is-link">
+                    <div class="level">
+                        <p class="title"> <?php echo $show['data_show'] ?></p>
+                        <p class="subtitle"><?php echo $show['cidade'] ?></p>
+                        <?php echo $show['hora_show'] ?>
                     </div>
-
                 </div>
-            </div>
-    </nav>
+            </div><br>
+        <?php } ?>
 
-    <div class="hero-body">
-        <div class="box">
-            <h3 class="title has-text-grey-dark has-text-centered">Agenda de Shows</h3>
-
-            <?php while ($show = mysqli_fetch_array($query)) { ?>
-                <div class="container">
-                    <div class="notification is-link">
-                        <div class="level">
-                            <p class="title"> <?php echo $show['data_show'] ?></p>
-                            <p class="subtitle"><?php echo $show['cidade'] ?></p>
-                            <?php echo $show['hora_show'] ?>
-                        </div>
-                    </div>
-                </div><br>
-            <?php } ?>
-
-        </div>
     </div>
+</div>
 </body>
